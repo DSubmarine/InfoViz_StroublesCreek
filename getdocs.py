@@ -22,9 +22,9 @@ if not creds or creds.invalid:
 DRIVE = discovery.build('drive', 'v3', http=creds.authorize(Http()))
 
 
-listOfFiles = []
-page_token = None
-q = "mimeType='image/jpeg'"
+# listOfFiles = []
+# page_token = None
+# q = "mimeType='image/jpeg'"
 
 #Get list of jpg files in Drive of authenticated user
 # while True:
@@ -38,17 +38,17 @@ q = "mimeType='image/jpeg'"
 	# if page_token is None:
 		# break
 
-while True:
-    response = DRIVE.files().list(q="mimeType='image/jpeg'",
-                                          spaces='drive',
-                                          fields='nextPageToken, files(id, name, folder)',
-                                          pageToken=page_token).execute()
-    for file in response.get('files', []):
-        # Process change
-        print('Found file: %s (%s)' % (file.get('name'), file.get('folder')))
-    page_token = response.get('nextPageToken', None)
-    if page_token is None:
-        break
+# while True:
+    # response = DRIVE.files().list(q="mimeType='image/jpeg'",
+                                          # spaces='drive',
+                                          # fields='nextPageToken, files(id, name, folder)',
+                                          # pageToken=page_token).execute()
+    # for file in response.get('files', []):
+        # # Process change
+        # print('Found file: %s (%s)' % (file.get('name'), file.get('folder')))
+    # page_token = response.get('nextPageToken', None)
+    # if page_token is None:
+        # break
 			
 			
 # for fileID in listOfFiles:
@@ -60,16 +60,16 @@ while True:
 	# status, done = downloader.next_chunk()
 	# print("Downloading..." + str(fileID['name']))
 
-# # if you get the shareable link, the link contains this id, replace the file_id below
-# file_id = '0B3e0FtdZKP8vMG9OQlFZOS14c2c'
-# request = DRIVE.files().get_media(fileId=file_id)
-# # replace the filename and extension in the first field below
-# fh = io.FileIO('stage.dat', mode='w')
-# downloader = MediaIoBaseDownload(fh, request)
-# done = False
-# while done is False:
-    # status, done = downloader.next_chunk()
-    # print("Download %d%%." % int(status.progress() * 100))
+# if you get the shareable link, the link contains this id, replace the file_id below
+file_id = '0B3e0FtdZKP8vMG9OQlFZOS14c2c'
+request = DRIVE.files().get_media(fileId=file_id)
+# replace the filename and extension in the first field below
+fh = io.FileIO('stage.dat', mode='w')
+downloader = MediaIoBaseDownload(fh, request)
+done = False
+while done is False:
+    status, done = downloader.next_chunk()
+    print("Download %d%%." % int(status.progress() * 100))
 	
 
 	
